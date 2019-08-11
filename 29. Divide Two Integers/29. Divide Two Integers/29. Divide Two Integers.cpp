@@ -4,9 +4,37 @@
 #include "pch.h"
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n"; 
+int divide(int dividend, int divisor) {
+	if (dividend == INT_MIN && divisor == -1) {
+		return INT_MAX;
+	}
+
+	int sign = (dividend > 0) ^ (divisor > 0) ? -1 : 1;
+	long res = 0;
+	long ldividend = labs(dividend);
+	long ldivisor = labs(divisor);
+
+	while (ldividend >= ldivisor) {
+		long sum = ldivisor, count = 1;
+		while (sum << 1 <= ldividend) {
+			sum <<= 1;
+			count <<= 1;
+		}
+		res += count;
+		ldividend -= sum;
+	}
+
+	return sign * res;
+}
+
+int main() {
+	int dividend = -1;
+	int divisor = 1;
+	int res = divide(dividend, divisor);
+
+    std::cout << res << std::endl;
+
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
